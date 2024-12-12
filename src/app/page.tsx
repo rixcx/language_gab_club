@@ -1,4 +1,26 @@
 import Image from "next/image";
+import { notion } from '../../lib/notion/notion';
+
+//＜なぜasync/awaitが必要？＞
+//asyncは非同期処理の宣言、つまり実行しながら他の処理もしますということ。
+//awaitはasyncの中で非同期処理が終わるまで一時停止させることができる。
+//→通常、非同期処理では、その処理が完了する前に次の行のコードが実行されますが、
+//awaitを使うと、その処理が終わるまで次の処理を待つようになります。
+//→APIの読み込みが発生するので、非同期処理かつawaitを使って待ってもらうのがベスト？
+
+//先頭の;()~~()は即時実行関数式
+;(async () => {
+  const Pagelist = await notion.databases.query({
+    database_id: process.env.DATABASE_ID,
+    sorts: [
+      {
+        property: 'created',
+        direction: 'descending',
+      },
+    ]
+  })
+  console.log(Pagelist.results[0].properties["title"].title[0].plain_text)
+})()
 
 export default function Home() {
   return (
