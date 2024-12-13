@@ -27,11 +27,11 @@ export const getAllEpisodes = async () => {
     const number = post.properties.number.number
     const title = post.properties.title.title[0].plain_text;
     const date = post.properties.date.date.start;
-    const youtube_url = post.properties.youtube_url.url;
+    const youtube_id = post.properties.youtube_id.rich_text[0].plain_text;
     const publish = post.properties.publish.checkbox;
-    //slug追加したい
-    return { id,number,title,date,youtube_url,publish };
+    const slug = post.properties.slug.rich_text[0].plain_text;
+    return { id,number,title,date,youtube_id,publish,slug };
   });
-
+  
   return episodesProperties;
 };

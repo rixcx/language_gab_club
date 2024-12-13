@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { getAllEpisodes } from '../../lib/notion/notion';
+import Link from "next/link";
 
 //＜なぜasync/awaitが必要？＞
 //asyncは非同期処理の宣言、つまり実行しながら他の処理もしますということ。
@@ -15,13 +16,16 @@ export default async function Home() {
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-      
-        {allEpisodes.map((item: any) => (
-          <li key={item.id}>
-            <h2>{item.title}</h2>
-            <p>Date: {item.date}</p>
-          </li>
-        ))}
+        <ul>
+          {allEpisodes.map((item: any) => (
+            <li key={item.id}>
+              <h2>{item.title}</h2>
+              <p>Date: {item.date}</p>
+              <p>ID: {item.youtube_id}</p>
+              <Link href={`/episode/${item.slug}`}>Listen</Link>
+            </li>
+          ))}
+        </ul>
 
       </main>
     </div>
