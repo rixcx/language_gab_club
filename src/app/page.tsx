@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getAllEpisodes } from '../../lib/notion/notion';
+import { getAllEpisodes, getDescriptionEpisode } from '../../lib/notion/notion';
 import Link from "next/link";
 
 //＜なぜasync/awaitが必要？＞
@@ -8,6 +8,7 @@ import Link from "next/link";
 //→通常、非同期処理では、その処理が完了する前に次の行のコードが実行されますが、
 //awaitを使うと、その処理が終わるまで次の処理を待つようになります。
 //→APIの読み込みが発生するので、非同期処理かつawaitを使って待ってもらうのがベスト？
+
 
 export default async function Home() {
 
@@ -22,6 +23,7 @@ export default async function Home() {
               <h2>{item.title}</h2>
               <p>Date: {item.date}</p>
               <p>ID: {item.youtube_id}</p>
+              <p>{getDescriptionEpisode(item.id)}</p>
               <Link href={`/episode/${item.slug}`}>Listen</Link>
             </li>
           ))}

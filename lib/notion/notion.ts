@@ -35,3 +35,21 @@ export const getAllEpisodes = async () => {
   
   return episodesProperties;
 };
+
+//IDからページ本文を取得する
+export const getDescriptionEpisode = async (id: any)  => {
+    const response = await notion.blocks.children.list({
+        block_id: id,
+    });
+    
+    return response.results[0].paragraph.rich_text[0].plain_text;
+}
+
+// ページの内容を取得する
+export const getDetailEpisode = async (id: any)  => {
+    const response = await notion.blocks.children.list({
+        block_id: id,
+    });
+
+    return response.results[0];
+}
