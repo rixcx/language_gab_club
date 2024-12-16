@@ -1,14 +1,6 @@
 import Image from "next/image";
-import { getAllEpisodes, getDescriptionEpisode } from '../../lib/notion/notion';
+import { getAllEpisodes, getEpisodeParagraph } from '../../lib/notion/notion';
 import Link from "next/link";
-
-//＜なぜasync/awaitが必要？＞
-//asyncは非同期処理の宣言、つまり実行しながら他の処理もしますということ。
-//awaitはasyncの中で非同期処理が終わるまで一時停止させることができる。
-//→通常、非同期処理では、その処理が完了する前に次の行のコードが実行されますが、
-//awaitを使うと、その処理が終わるまで次の処理を待つようになります。
-//→APIの読み込みが発生するので、非同期処理かつawaitを使って待ってもらうのがベスト？
-
 
 export default async function Home() {
 
@@ -18,17 +10,17 @@ export default async function Home() {
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
         <ul>
-          {allEpisodes.map((item: any) => (
-            <li key={item.id}>
-              <h2>{item.title}</h2>
-              <p>Date: {item.date}</p>
-              <p>ID: {item.youtube_id}</p>
-              <p>{getDescriptionEpisode(item.id)}</p>
-              <Link href={`/episode/${item.slug}`}>Listen</Link>
+          {allEpisodes.map((prop: any) => (
+            <li key={prop.id}>
+              <p>=============================</p>
+              <h2>{prop.title}</h2>
+              <p>Date: {prop.date}</p>
+              <p>ID: {prop.youtube_id}</p>
+              <p>{getEpisodeParagraph(prop.id)}</p>
+              <Link href={`/episode/${prop.slug}/${prop.id}`}>Listen</Link>
             </li>
           ))}
         </ul>
-
       </main>
     </div>
   );

@@ -5,6 +5,7 @@ export const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
 
+//データベース一覧から各記事の情報とる関数
 export const getAllEpisodes = async () => {
 
   //インスタンス作成
@@ -18,11 +19,12 @@ export const getAllEpisodes = async () => {
         property: 'created',
         direction: 'descending',
       },
+      //publish追加
     ]
   })
   
   //Responseから各記事の必要な情報だけを取り出し配列に入れ直す
-  const episodesProperties = response.results.map((post:any) => {
+  const allEpisodesProperties = response.results.map((post:any) => {
     const id = post.id;
     const number = post.properties.number.number
     const title = post.properties.title.title[0].plain_text;
@@ -33,23 +35,30 @@ export const getAllEpisodes = async () => {
     return { id,number,title,date,youtube_id,publish,slug };
   });
   
-  return episodesProperties;
+  return allEpisodesProperties;
 };
 
-//IDからページ本文を取得する
-export const getDescriptionEpisode = async (id: any)  => {
-    const response = await notion.blocks.children.list({
-        block_id: id,
-    });
-    
-    return response.results[0].paragraph.rich_text[0].plain_text;
+//記事IDから内容のブロックを取り出す
+export const getEpisodeBlocks = async (id: any)  => {
+  const response = await notion.blocks.children.list({
+      block_id: id,
+  });
+  return response.results;
 }
 
-// ページの内容を取得する
-export const getDetailEpisode = async (id: any)  => {
-    const response = await notion.blocks.children.list({
-        block_id: id,
-    });
+//記事IDからページ本文を取得する
+export const getEpisodeParagraph = async (id: any)  => {
+  const response = await getEpisodeBlocks(id)
+  
+  //空行を削除
+  const paragraphs = response.filter((prop: { type: any; paragraph: { rich_text: any }; })=> {
+      if(prop.type === 'paragraph' && !!(prop.paragraph.rich_text.length) ){
+          return true;
+      }
+  });
+  
+  //results[0]で直接指定してしまっている→一時的な処置として?オプショナルチェイニングで判定する
+  // return response.results[0]?.paragraph.rich_text[0]?.plain_text;
 
-    return response.results[0];
+  return paragraphs[0].paragraph.rich_text[0].plain_text;
 }
