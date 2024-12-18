@@ -1,30 +1,40 @@
 const { Client } = require("@notionhq/client")
 
-// Initializing a client
+// 初期化
 export const notion = new Client({
   auth: process.env.NOTION_TOKEN,
 })
 
-//データベース一覧から各記事の情報とる関数
+// データベースを取得
+const response = await notion.databases.query({
+  database_id: process.env.DATABASE_ID,
+  sorts: [
+    {
+      property: 'created',
+      direction: 'descending',
+    },
+    //publish追加
+  ]
+})
+
+
+// すべての記事を取得
 export const getAllEpisodes = async () => {
 
-  //インスタンス作成
-  const mynotion = notion;
-  
-  //インスタンスをもとにAPIを取得してきて、responceにいれる
-  const response = await mynotion.databases.query({
-    database_id: process.env.DATABASE_ID,
-    sorts: [
-      {
-        property: 'created',
-        direction: 'descending',
-      },
-      //publish追加
-    ]
-  })
-  
-  //Responseから各記事の必要な情報だけを取り出し配列に入れ直す
-  const allEpisodesProperties = response.results.map((post:any) => {
+  const getEpisodeParagraph = async (blockId: any) => {
+    const childrenBlocks = await notion.blocks.children.list({
+        block_id: blockId,
+    });
+    
+    // 空行を除去した結果を返す
+    const paragraphs = childrenBlocks.results.filter((prop: { type: any; paragraph: { rich_text: any } }) => 
+      prop.type === 'paragraph' && prop.paragraph.rich_text.length > 0
+    );
+    return paragraphs[0]?.paragraph.rich_text[0]?.plain_text;
+  };
+
+  const allEpisodesProps = await Promise.all(
+   response.results.map(async (post: any) => {
     const id = post.id;
     const number = post.properties.number.number
     const title = post.properties.title.title[0].plain_text;
@@ -32,33 +42,68 @@ export const getAllEpisodes = async () => {
     const youtube_id = post.properties.youtube_id.rich_text[0].plain_text;
     const publish = post.properties.publish.checkbox;
     const slug = post.properties.slug.rich_text[0].plain_text;
-    return { id,number,title,date,youtube_id,publish,slug };
-  });
-  
-  return allEpisodesProperties;
+    const paragraph = await getEpisodeParagraph(post.id);
+    
+    return { id,number,title,date,youtube_id,publish,slug,paragraph };
+  }));
+
+  return allEpisodesProps;
 };
 
-//記事IDから内容のブロックを取り出す
-export const getEpisodeBlocks = async (id: any)  => {
-  const response = await notion.blocks.children.list({
-      block_id: id,
-  });
-  return response.results;
-}
 
-//記事IDからページ本文を取得する
-export const getEpisodeParagraph = async (id: any)  => {
-  const response = await getEpisodeBlocks(id)
-  
-  //空行を削除
-  const paragraphs = response.filter((prop: { type: any; paragraph: { rich_text: any }; })=> {
-      if(prop.type === 'paragraph' && !!(prop.paragraph.rich_text.length) ){
-          return true;
-      }
+// 記事IDから要素を取得
+export const getDetailEpisodes = async (pageId: any) => {
+
+  const childrenBlocks = await notion.blocks.children.list({
+      block_id: pageId,
   });
   
-  //results[0]で直接指定してしまっている→一時的な処置として?オプショナルチェイニングで判定する
-  // return response.results[0]?.paragraph.rich_text[0]?.plain_text;
+  const getTabeChildrenBlocks = async (blockId: any) => {
+    const tableChildrenBlocks = await notion.blocks.children.list({
+        block_id: blockId,
+    });
+    const customTableChildren = await 
+    tableChildrenBlocks.results.map((block:any) => {
+      return {
+        table_row: {
+          cells: block.table_row.cells.map((cell: any[]) => {
+            return cell.map((item) => ({
+              plain_text: item.plain_text,
+            }));
+          }),
+        },
+      };
+    });
+    return customTableChildren;
+  };
 
-  return paragraphs[0].paragraph.rich_text[0].plain_text;
-}
+  const detailEpisodeProps = await Promise.all(
+    childrenBlocks.results.map(async (prop: { type: string; paragraph: { rich_text: string | any[]; }; has_children: any; id: any; heading_3: { rich_text: { plain_text: any; }[]; }; }) => {
+
+    let value;
+    //Paragraph
+    if (prop.type === 'paragraph' && !!(prop.paragraph.rich_text.length)) {
+      value = prop.paragraph?.rich_text?.[0]?.plain_text;
+    //Table
+    } else if (prop.type === "table" && prop.has_children) {
+      const e = await getTabeChildrenBlocks(prop.id);
+      value =  JSON.stringify(e);
+    //Heading
+    } else if (prop.type === 'heading_3') {
+      value = prop.heading_3?.rich_text?.[0]?.plain_text;
+    } else {
+      value = null;
+    }
+    
+    const newEpisodeProps = {
+      id: prop.id,
+      has_children: prop.has_children,
+      type: prop.type,
+      value: value
+    };
+    
+    return newEpisodeProps;
+  }));
+
+  return detailEpisodeProps;
+};
