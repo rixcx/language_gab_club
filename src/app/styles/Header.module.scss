@@ -1,0 +1,13 @@
+@use "global/common" as common;
+
+.header {
+  margin: 2rem 0;
+  font-size: 1.5em;
+  font-weight: bold;
+  text-align: center;
+  
+  @include common.mediaquery(sp) {
+    margin: 2.5rem 0;
+    font-size: 1.4rem;
+  }
+}

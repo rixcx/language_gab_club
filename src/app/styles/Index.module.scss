@@ -1,0 +1,6 @@
+@use "global/common" as common;
+
+.main {
+  @include common.mediaquery(sp) {
+  }
+}

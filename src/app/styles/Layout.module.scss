@@ -1,0 +1,22 @@
+@use "global/common" as common;
+
+html {
+  font-size: 16px;
+}
+
+.body {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 4rem;
+  background-color: common.$color-white;
+
+  @include common.mediaquery(sp) {
+    padding: 1.5rem 0.9375rem;
+  }
+}
+
+.inner {
+  @include common.mediaquery(sp) {
+  }
+}

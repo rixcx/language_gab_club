@@ -2,13 +2,15 @@ import { getAllEpisodes } from '@/lib/notion/notion';
 import Image from "next/image";
 import Link from "next/link";
 
+import css from '@/src/app/styles/Index.module.scss'
+
 export default async function Home() {
 
   const allEpisodes = await getAllEpisodes();
 
   return (
     <div className="">
-      <main className="">
+      <main className={css.main}>
         <ul>
           {allEpisodes.map(async (prop: any) => (
             <li key={prop.id}>
