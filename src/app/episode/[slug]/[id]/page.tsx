@@ -1,4 +1,4 @@
-import { getDetailEpisodes } from '../../../../../lib/notion/notion';
+import { getDetailEpisodes } from '@/lib/notion/notion';
 import Image from "next/image";
 import Link from "next/link";
 
