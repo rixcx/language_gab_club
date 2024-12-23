@@ -2,13 +2,14 @@
 
 html {
   font-size: 16px;
-  color: common.$color-black;
   background-color: common.$color-primary;
 }
 
 .body {
   max-width: 390px;
   margin: 0 auto;
+  font-family: var(--font-roboto);
+  color: common.$color-black;
   background-color: common.$color-white;
 
   @include common.mediaquery(sp) {
