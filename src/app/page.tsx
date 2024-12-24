@@ -36,13 +36,13 @@ export default async function Home() {
               width={330}
               height={186}
             />
-            <div className={styles.latest__inner}>
-              <div className={styles.latest__detail}>
+            <div className={styles.latest_inner}>
+              <div className={styles.latest_detail}>
                 <span>#3</span>
                 <h3>FAVORITE PLACES IN BRISBANE!</h3>
                 <p>Brisbane, the city we live in, is a place where beautiful nature and historic buildings harmonize. It's full of cafés, restaurants, and cultural spots...</p>
               </div>
-              <div className={styles.latest__bottom}>
+              <div className={styles.latest_bottom}>
                 <time>2024.03.15</time>
                 <div>Listen</div>
               </div>
