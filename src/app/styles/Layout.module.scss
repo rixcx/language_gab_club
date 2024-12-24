@@ -2,7 +2,8 @@
 
 html {
   font-size: 16px;
-  background-color: common.$color-primary;
+  line-height: 1.7rem;
+  background-color: #F47D2E;
 }
 
 .body {
@@ -11,6 +12,7 @@ html {
   font-family: var(--font-roboto);
   color: common.$color-black;
   background-color: common.$color-white;
+  box-shadow: 0px 0px 55px -5px #bb5c1e;
 
   @include common.mediaquery(sp) {
  }
