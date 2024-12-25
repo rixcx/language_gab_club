@@ -10,6 +10,8 @@ import '@/src/app/styles/global/reset.css'
 import '@/src/app/styles/global/global.scss'
 import css from '@/src/app/styles/Layout.module.scss';
 
+import 'swiper/swiper-bundle.css';
+
 const anton_sc = Anton_SC({
   weight: "400",
   variable: '--font-anton_sc',

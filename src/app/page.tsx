@@ -2,6 +2,8 @@ import { getAllEpisodes } from '@/lib/notion/notion';
 import Image from "next/image";
 import Link from "next/link";
 
+import EpisodeSlider from '@/src/app/components/EpisodeSlider';
+
 import styles from '@/src/app/styles/Index.module.scss'
 
 export default async function Home() {
@@ -53,18 +55,21 @@ export default async function Home() {
       
       <section className={styles.recent_episode}>
       <h2 className={styles.subtitle}>RECENT EPISODES</h2>
-      <ul>
-        {allEpisodes.map(async (prop: any) => (
-          <li key={prop.id}>
-            <p>=============================</p>
-            <h2>{prop.title}</h2>
-            <p>Date: {prop.date}</p>
-            <p>ID: {prop.youtube_id}</p>
-            <p>Description: {prop.paragraph}</p>
-            <Link href={`/episode/${prop.slug}/${prop.id}`}>【Listen】</Link>
-          </li>
-        ))}
-      </ul>
+      <div className={styles.recents}>
+      <EpisodeSlider/>
+        <ul className={styles.recents__wrap}> 
+          {allEpisodes.map(async (prop: any) => (
+            <li key={prop.id}>
+              <p>=============================</p>
+              <h2>{prop.title}</h2>
+              <p>Date: {prop.date}</p>
+              <p>ID: {prop.youtube_id}</p>
+              <p>Description: {prop.paragraph}</p>
+              <Link href={`/episode/${prop.slug}/${prop.id}`}>【Listen】</Link>
+            </li>
+          ))}
+        </ul>
+      </div>
       <div>・・・</div>
       
       <Link href="" className={styles.recent__btn}>

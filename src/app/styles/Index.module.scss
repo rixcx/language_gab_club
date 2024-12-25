@@ -125,3 +125,29 @@
     } 
   }
 }
+
+
+.recent_episode {
+  margin: 0 -30px 0;
+  padding: 80px 30px 80px;
+  background-color: common.$color-secondary;
+  
+  >.subtitle {
+    color: common.$color-gray;
+  }
+  
+  .recents {
+    background-color: azure;
+    
+    &__wrap {
+      background-color: rgb(44, 44, 111);
+      
+      > li {
+        background-color: #fff;
+        
+        + li {
+        }
+      }
+    }
+  }
+}
