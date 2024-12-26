@@ -1,9 +1,8 @@
+import { getAllEpisodes } from "@/src/app/api/notion/route"
+import { EpisodeSlider } from '@/src/app/components/EpisodeSlider';
+
 import Image from "next/image";
 import Link from "next/link";
-
-import { getAllEpisodes } from "@/src/app/api/notion/route"
-
-import { EpisodeSlider } from '@/src/app/components/EpisodeSlider';
 
 import styles from '@/src/app/styles/Index.module.scss'
 
