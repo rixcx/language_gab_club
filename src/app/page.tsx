@@ -1,14 +1,25 @@
-import { getAllEpisodes } from '@/lib/notion/notion';
+'use client';
+import { useEffect, useState } from "react";
+
 import Image from "next/image";
 import Link from "next/link";
 
-import EpisodeSlider from '@/src/app/components/EpisodeSlider';
-
 import styles from '@/src/app/styles/Index.module.scss'
 
-export default async function Home() {
+export default function Home() {
 
-  const allEpisodes = await getAllEpisodes();
+  const [episodes, setEpisodes] = useState<any[]>([]);
+  const [latestEpisode, setLatestEpisode] = useState<any>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/notion");
+      const result = await response.json();
+      setEpisodes(result);
+      setLatestEpisode(result[0])
+    };
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -40,6 +51,8 @@ export default async function Home() {
             />
             <div className={styles.latest_inner}>
               <div className={styles.latest_detail}>
+              <p>{latestEpisode.properties.number.number}</p>
+              <p>{latestEpisode.properties.title.title[0].plain_text}</p>
                 <span>#3</span>
                 <h3>FAVORITE PLACES IN BRISBANE!</h3>
                 <p>Brisbane, the city we live in, is a place where beautiful nature and historic buildings harmonize. It's full of cafés, restaurants, and cultural spots...</p>
@@ -53,12 +66,34 @@ export default async function Home() {
         </div>
       </section>
       
+      
+      
+        {episodes.map((episode) => (
+          <li key={episode.id}>
+            <p>#{episode.properties.number.number}</p>
+            <p>{episode.properties.title.title[0].plain_text}</p>
+            <p>{episode.id}</p>
+            <p>{episode.properties.date.date.start}</p>
+            
+            <Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}>【Listen】</Link>
+          </li>
+        ))}
+      
+      
+        
       <section className={styles.recent_episode}>
       <h2 className={styles.subtitle}>RECENT EPISODES</h2>
+      
+      
+      
+      
+      
+      
+      
+      
       <div className={styles.recents}>
-      <EpisodeSlider/>
         <ul className={styles.recents__wrap}> 
-          {allEpisodes.map(async (prop: any) => (
+          {/* {allEpisodes.map(async (prop: any) => (
             <li key={prop.id}>
               <p>=============================</p>
               <h2>{prop.title}</h2>
@@ -67,7 +102,7 @@ export default async function Home() {
               <p>Description: {prop.paragraph}</p>
               <Link href={`/episode/${prop.slug}/${prop.id}`}>【Listen】</Link>
             </li>
-          ))}
+          ))} */}
         </ul>
       </div>
       <div>・・・</div>
