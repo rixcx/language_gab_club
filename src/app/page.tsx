@@ -1,25 +1,20 @@
-'use client';
-import { useEffect, useState } from "react";
-
 import Image from "next/image";
 import Link from "next/link";
 
+import { getAllEpisodes } from "@/src/app/api/notion/route"
+
 import styles from '@/src/app/styles/Index.module.scss'
 
-export default function Home() {
+async function fetchData() {
+  const response = await getAllEpisodes();
+  const result = await response.json();
+  return result;
+};
 
-  const [episodes, setEpisodes] = useState<any[]>([]);
-  const [latestEpisode, setLatestEpisode] = useState<any>([]);
+export default async function Home() {
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/notion");
-      const result = await response.json();
-      setEpisodes(result);
-      setLatestEpisode(result[0])
-    };
-    fetchData();
-  }, []);
+  const episodes = await fetchData();
+  const latestEpisode = episodes[0];
 
   return (
     <>
@@ -42,6 +37,7 @@ export default function Home() {
       <section className={styles.latest_episode}>
         <div className={styles.latest_episode_inner}>
           <h2 className={styles.subtitle}>LATEST EPISODE</h2>
+          
           <div className={styles.latest}>
             <Image
               src="/episodes/img_thum_03.jpg"
@@ -51,61 +47,35 @@ export default function Home() {
             />
             <div className={styles.latest_inner}>
               <div className={styles.latest_detail}>
-              <p>{latestEpisode.properties.number.number}</p>
-              <p>{latestEpisode.properties.title.title[0].plain_text}</p>
-                <span>#3</span>
-                <h3>FAVORITE PLACES IN BRISBANE!</h3>
-                <p>Brisbane, the city we live in, is a place where beautiful nature and historic buildings harmonize. It's full of cafés, restaurants, and cultural spots...</p>
+                <span>#{latestEpisode.properties.number.number}</span>
+                <h3>{latestEpisode.properties.title.title[0].plain_text}</h3>
+                <p>{latestEpisode.paragraph}</p>
               </div>
               <div className={styles.latest_bottom}>
-                <time>2024.03.15</time>
-                <div>Listen</div>
+                <time>{latestEpisode.properties.date.date.start}</time>
+                <div><Link href={`/episode/${latestEpisode.properties.slug.rich_text[0].plain_text}/${latestEpisode.id}`}>Listen</Link></div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <section className={styles.recent_episode}>
+      <h2 className={styles.subtitle}>RECENT EPISODES</h2>
       
-      
-      
-        {episodes.map((episode) => (
+      <div className={styles.recents}>
+        <ul className={styles.recents__wrap}> 
+        {episodes.map((episode: any) => (
           <li key={episode.id}>
             <p>#{episode.properties.number.number}</p>
             <p>{episode.properties.title.title[0].plain_text}</p>
             <p>{episode.id}</p>
             <p>{episode.properties.date.date.start}</p>
-            
+            <p>{episode.paragraph}</p>
             <Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}>【Listen】</Link>
           </li>
         ))}
-      
-      
-        
-      <section className={styles.recent_episode}>
-      <h2 className={styles.subtitle}>RECENT EPISODES</h2>
-      
-      
-      
-      
-      
-      
-      
-      
-      <div className={styles.recents}>
-        <ul className={styles.recents__wrap}> 
-          {/* {allEpisodes.map(async (prop: any) => (
-            <li key={prop.id}>
-              <p>=============================</p>
-              <h2>{prop.title}</h2>
-              <p>Date: {prop.date}</p>
-              <p>ID: {prop.youtube_id}</p>
-              <p>Description: {prop.paragraph}</p>
-              <Link href={`/episode/${prop.slug}/${prop.id}`}>【Listen】</Link>
-            </li>
-          ))} */}
         </ul>
       </div>
-      <div>・・・</div>
       
       <Link href="" className={styles.recent__btn}>
         ALL EPISODES

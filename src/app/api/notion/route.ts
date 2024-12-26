@@ -5,7 +5,20 @@ const notion = new Client({
   auth: process.env.NOTION_TOKEN
 });
 
-export async function GET() {
+const getEpisodeParagraph = async (blockId: any) => {
+  const childrenBlocks: any = await notion.blocks.children.list({
+    block_id: blockId,
+  });
+  
+  // 空行を除去した結果を返す
+  const paragraphs = childrenBlocks.results.filter((prop: any) => 
+    prop.type === 'paragraph' && prop.paragraph.rich_text.length > 0
+  );
+  
+  return paragraphs[0]?.paragraph?.rich_text[0]?.plain_text;
+};
+
+export async function getAllEpisodes() {
   const databaseId = process.env.DATABASE_ID as string;;
 
   try {
@@ -19,8 +32,16 @@ export async function GET() {
         //publish追加
       ]
     });
-
-    return new Response(JSON.stringify(response.results), {
+    
+    // 最初の段落を配列に追加
+    const episodes =  await Promise.all(
+      response.results.map(async (episode) => {
+        const paragraph = await getEpisodeParagraph(episode.id);
+        const newResults = {...episode, paragraph};
+        return newResults;
+    }))
+    
+    return new Response(JSON.stringify(episodes), {
       status: 200,
     });
   } catch (error) {
@@ -29,3 +50,4 @@ export async function GET() {
     });
   }
 }
+
