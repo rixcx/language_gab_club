@@ -3,6 +3,8 @@ import Link from "next/link";
 
 import { getAllEpisodes } from "@/src/app/api/notion/route"
 
+import { EpisodeSlider } from '@/src/app/components/EpisodeSlider';
+
 import styles from '@/src/app/styles/Index.module.scss'
 
 async function fetchData() {
@@ -63,18 +65,21 @@ export default async function Home() {
       <h2 className={styles.subtitle}>RECENT EPISODES</h2>
       
       <div className={styles.recents}>
-        <ul className={styles.recents__wrap}> 
-        {episodes.map((episode: any) => (
-          <li key={episode.id}>
-            <p>#{episode.properties.number.number}</p>
-            <p>{episode.properties.title.title[0].plain_text}</p>
-            <p>{episode.id}</p>
-            <p>{episode.properties.date.date.start}</p>
-            <p>{episode.paragraph}</p>
-            <Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}>【Listen】</Link>
-          </li>
-        ))}
-        </ul>
+      
+        <EpisodeSlider episodes={episodes} />
+      
+        {/* <ul className={styles.recents__wrap}> 
+          {episodes.map((episode: any) => (
+            <li key={episode.id}>
+              <p>#{episode.properties.number.number}</p>
+              <p>{episode.properties.title.title[0].plain_text}</p>
+              <p>{episode.id}</p>
+              <p>{episode.properties.date.date.start}</p>
+              <p>{episode.paragraph}</p>
+              <Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}>【Listen】</Link>
+            </li>
+          ))}
+        </ul> */}
       </div>
       
       <Link href="" className={styles.recent__btn}>

@@ -1,10 +1,18 @@
 'use client';
-import "swiper/css";
+import Link from "next/link";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-const data: string[] = ["Slide 1", "Slide 2", "Slide 3", "Slide 4"];
+import "swiper/css";
 
-function App() {
+interface Episode {
+  [x: string]: any;
+}
+
+interface EpisodeSliderProps {
+  episodes: Episode[]; // サーバーコンポーネントから渡されるデータの型
+}
+
+export const EpisodeSlider = ({ episodes }: EpisodeSliderProps) => {
   return (
     <>
       <Swiper
@@ -13,14 +21,20 @@ function App() {
         onSlideChange={() => console.log("slide change")}
         onSwiper={(swiper) => console.log(swiper)}
       >
-        {data.map((data) => (
-          <SwiperSlide key={data}>
-            <div style={{ background: "grey", height: "300px", }}>{data}</div>
+        {episodes .map((episode) => (
+          <SwiperSlide key={episode.id}>
+            <div style={{ background: "grey", height: "100%", }}>
+            <p>#{episode.properties.number.number}</p>
+            <p>{episode.properties.title.title[0].plain_text}</p>
+            <p>{episode.id}</p>
+            <p>{episode.properties.date.date.start}</p>
+            <p>{episode.paragraph}</p>
+            <Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}>【Listen】</Link>
+            
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
     </>
   );
 }
-
-export default App;
