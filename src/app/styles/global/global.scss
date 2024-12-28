@@ -1,1 +1,12 @@
 @use "common" as common;
+
+html {
+  font-size: 16px;
+  line-height: 1.7rem;
+  background-color: #F47D2E;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

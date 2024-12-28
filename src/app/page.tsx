@@ -1,21 +1,28 @@
-import { getAllEpisodes } from '@/lib/notion/notion';
+import { getAllEpisodes } from "@/src/app/api/notion/route"
+import { EpisodeSlider } from '@/src/app/components/EpisodeSlider';
+
 import Image from "next/image";
 import Link from "next/link";
 
-import EpisodeSlider from '@/src/app/components/EpisodeSlider';
-
 import styles from '@/src/app/styles/Index.module.scss'
+
+async function fetchData() {
+  const response = await getAllEpisodes();
+  const result = await response.json();
+  return result;
+};
 
 export default async function Home() {
 
-  const allEpisodes = await getAllEpisodes();
+  const episodes = await fetchData();
+  const latestEpisode = episodes[0];
 
   return (
     <>
       <main className={styles.main}>
       
       <section className={styles.hero}>
-        <div className={styles.logo}>
+        <div className={styles.hero__logo}>
           <h1>Just English Please!</h1>
           <Image
             src="/common/logo_title_blk.svg"
@@ -24,29 +31,31 @@ export default async function Home() {
             height={258}
           />
         </div>
-        <p className={styles.disc}>Our podcast is all about life at our language school—learning, overcoming challenges, and living abroad. Join us for stories, tips, and insights from our vibrant community!
+        <p className={styles.hero__disc}>Our podcast is all about life at our language school—learning, overcoming challenges, and living abroad. Join us for stories, tips, and insights from our vibrant community!
         </p>
       </section>
       
       <section className={styles.latest_episode}>
-        <div className={styles.latest_episode_inner}>
+        <div className={styles.latest_episode__wrap}>
           <h2 className={styles.subtitle}>LATEST EPISODE</h2>
           <div className={styles.latest}>
+           <div className={styles.latest__img}>
             <Image
-              src="/episodes/img_thum_03.jpg"
-              alt="FAVORITE PLACES IN BRISBANE!"
+              src={`/episodes/${latestEpisode.properties.thumbnail.rich_text[0].plain_text}`}
+              alt={`${latestEpisode.properties.title.title[0].plain_text}`}
               width={330}
               height={186}
             />
+            </div>
             <div className={styles.latest_inner}>
               <div className={styles.latest_detail}>
-                <span>#3</span>
-                <h3>FAVORITE PLACES IN BRISBANE!</h3>
-                <p>Brisbane, the city we live in, is a place where beautiful nature and historic buildings harmonize. It's full of cafés, restaurants, and cultural spots...</p>
+                <span>#{latestEpisode.properties.number.number}</span>
+                <h3>{latestEpisode.properties.title.title[0].plain_text}</h3>
+                <p>{latestEpisode.paragraph}</p>
               </div>
               <div className={styles.latest_bottom}>
-                <time>2024.03.15</time>
-                <div>Listen</div>
+                <time>{latestEpisode.properties.date.date.start}</time>
+                <div><Link href={`/episodes/${latestEpisode.properties.slug.rich_text[0].plain_text}/${latestEpisode.id}`}>Listen</Link></div>
               </div>
             </div>
           </div>
@@ -56,25 +65,9 @@ export default async function Home() {
       <section className={styles.recent_episode}>
       <h2 className={styles.subtitle}>RECENT EPISODES</h2>
       <div className={styles.recents}>
-      <EpisodeSlider/>
-        <ul className={styles.recents__wrap}> 
-          {allEpisodes.map(async (prop: any) => (
-            <li key={prop.id}>
-              <p>=============================</p>
-              <h2>{prop.title}</h2>
-              <p>Date: {prop.date}</p>
-              <p>ID: {prop.youtube_id}</p>
-              <p>Description: {prop.paragraph}</p>
-              <Link href={`/episode/${prop.slug}/${prop.id}`}>【Listen】</Link>
-            </li>
-          ))}
-        </ul>
+        <EpisodeSlider episodes={episodes} />
       </div>
-      <div>・・・</div>
-      
-      <Link href="" className={styles.recent__btn}>
-        ALL EPISODES
-      </Link>
+      <div className={styles.recent_episode__btn}><Link href="/episodes">ALL EPISODES</Link></div>
       </section>
       </main>
     </>

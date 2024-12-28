@@ -1,26 +1,60 @@
 'use client';
-import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 
-const data: string[] = ["Slide 1", "Slide 2", "Slide 3", "Slide 4"];
+import Image from "next/image";
+import Link from "next/link";
 
-function App() {
+import styles from '@/src/app/styles/EpisodeSlider.module.scss'
+import "swiper/css";
+import "swiper/css/pagination";
+
+interface Episode {
+  [x: string]: any;
+}
+interface EpisodeSliderProps {
+  episodes: Episode[]; // サーバーコンポーネントから渡されるデータの型
+}
+
+export const EpisodeSlider = ({ episodes }: EpisodeSliderProps) => {
   return (
     <>
       <Swiper
         spaceBetween={25}
-        slidesPerView={1.5}
-        onSlideChange={() => console.log("slide change")}
-        onSwiper={(swiper) => console.log(swiper)}
+        slidesPerView={1.4}
+        modules={[Pagination]}
+        pagination={{
+          type: "bullets",
+          el: ".custom-swiper-pagination",
+          clickable: true,
+        }}
       >
-        {data.map((data) => (
-          <SwiperSlide key={data}>
-            <div style={{ background: "grey", height: "300px", }}>{data}</div>
+        {episodes .map((episode) => (
+          <SwiperSlide key={episode.id}>
+            <div className={styles.episode}>
+              <div className={styles.episode__img}>
+                <Image
+                  src={`/episodes/${episode.properties.thumbnail.rich_text[0].plain_text}`}
+                  alt={`${episode.properties.title.title[0].plain_text}`}
+                  width={330}
+                  height={186}
+                />
+              </div>
+              <div className={styles.episode__inner}>
+                <div className={styles.episode__detail}>
+                  <span>#{episode.properties.number.number}</span>
+                  <h3>{episode.properties.title.title[0].plain_text}</h3>
+                </div>
+                <div className={styles.episode__bottom}>
+                  <time>{episode.properties.date.date.start}</time>
+                  <div><Link href={`/episodes/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}/></div>
+                </div>
+              </div>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
+      <div className="custom-swiper-pagination"></div>
     </>
   );
 }
-
-export default App;
