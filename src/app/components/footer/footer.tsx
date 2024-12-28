@@ -13,7 +13,7 @@ export default function Footer() {
       </ul>
       <ul className={styles.sns}>
         <li>
-          <Link href="">
+          <Link href="#">
             <Image
               src="/common/img_icon_youtube.svg"
               alt="Youtube"
@@ -23,7 +23,7 @@ export default function Footer() {
           </Link>
         </li>
         <li>
-          <Link href="">
+          <Link href="#">
             <Image
               src="/common/img_icon_instagram.svg"
               alt="Instagram"

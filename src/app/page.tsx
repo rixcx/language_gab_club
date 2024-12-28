@@ -41,7 +41,7 @@ export default async function Home() {
           <div className={styles.latest}>
            <div className={styles.latest__img}>
             <Image
-              src="/episodes/img_thum_03.jpg"
+              src={`/episodes/${latestEpisode.properties.thumbnail.rich_text[0].plain_text}`}
               alt={`${latestEpisode.properties.title.title[0].plain_text}`}
               width={330}
               height={186}
@@ -55,7 +55,7 @@ export default async function Home() {
               </div>
               <div className={styles.latest_bottom}>
                 <time>{latestEpisode.properties.date.date.start}</time>
-                <div><Link href={`/episode/${latestEpisode.properties.slug.rich_text[0].plain_text}/${latestEpisode.id}`}>Listen</Link></div>
+                <div><Link href={`/episodes/${latestEpisode.properties.slug.rich_text[0].plain_text}/${latestEpisode.id}`}>Listen</Link></div>
               </div>
             </div>
           </div>
@@ -67,7 +67,7 @@ export default async function Home() {
       <div className={styles.recents}>
         <EpisodeSlider episodes={episodes} />
       </div>
-      <div className={styles.recent_episode__btn}><Link href="">ALL EPISODES</Link></div>
+      <div className={styles.recent_episode__btn}><Link href="/episodes">ALL EPISODES</Link></div>
       </section>
       </main>
     </>

@@ -34,7 +34,7 @@ export const EpisodeSlider = ({ episodes }: EpisodeSliderProps) => {
             <div className={styles.episode}>
               <div className={styles.episode__img}>
                 <Image
-                  src="/episodes/img_thum_03.jpg"
+                  src={`/episodes/${episode.properties.thumbnail.rich_text[0].plain_text}`}
                   alt={`${episode.properties.title.title[0].plain_text}`}
                   width={330}
                   height={186}
@@ -47,7 +47,7 @@ export const EpisodeSlider = ({ episodes }: EpisodeSliderProps) => {
                 </div>
                 <div className={styles.episode__bottom}>
                   <time>{episode.properties.date.date.start}</time>
-                  <div><Link href={`/episode/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}/></div>
+                  <div><Link href={`/episodes/${episode.properties.slug.rich_text[0].plain_text}/${episode.id}`}/></div>
                 </div>
               </div>
             </div>
