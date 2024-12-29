@@ -55,6 +55,27 @@ export async function getAllEpisodes() {
 }
 
 
+// 記事IDから日付などを取得
+export async function getInfoEpisode(pageId: string) {
+
+  try {
+    const response = await notion.pages.retrieve({
+    page_id: pageId
+   });
+    
+    const responseInfo = (response as any).properties; 
+
+    return new Response(JSON.stringify(responseInfo), {
+      status: 200,
+    });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "Failed to fetch data from Notion" }), {
+      status: 500,
+    });
+  }
+};
+
+
 // 記事IDから詳細を取得
 export async function getDetailEpisode(pageId: string) {
 
