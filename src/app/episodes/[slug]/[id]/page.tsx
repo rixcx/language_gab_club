@@ -3,6 +3,8 @@ import { getDetailEpisode } from "@/src/app/api/notion/route"
 import Image from "next/image";
 import Link from "next/link";
 
+import styles from '@/src/app/styles/EpisodeDatail.module.scss'
+
 async function fetchData(id: string) {
   const detailEpisode = await getDetailEpisode(id);
   const result = await detailEpisode.json();
@@ -47,7 +49,30 @@ export default async function EpisodeDetail({ params }: { params: { slug: string
       <main className="">
         <h1>This is【{slug}】page.</h1>
         <p>Page id: {id}</p>
-        <ul>
+        <div>
+          {episodeBlocks.map((block: any) => {
+            if (block.type === 'paragraph' && block.paragraph.rich_text !== null) {
+              return <div key={block.id} className={styles.paragraph}>{block.paragraph?.rich_text?.[0]?.plain_text}</div>;
+            } else if (block.type === 'heading_3') {
+              return <div key={block.id} className={styles.heading_3}>{block.heading_3?.rich_text?.[0]?.plain_text}</div>;
+            } else if (block.type === "table" && block.has_children) {
+              return (
+                <table key={block.id} className={styles.table}>
+                  <tbody>
+                    {block.tableDetail.map((row: any, index: number) => (
+                      <tr key={index}>
+                        <th>{row.table_row.cells[0][0].plain_text}</th>
+                        <td>{row.table_row.cells[1][0].plain_text}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              );
+            }
+            return null;
+          })}
+        </div>
+        {/* <ul>
           {customEpisodeBlocks.map((block: any) => (
             <li key={block.id}>
               <p>=============================</p>
@@ -56,7 +81,7 @@ export default async function EpisodeDetail({ params }: { params: { slug: string
               <h1>contents: {block.contents}</h1>
             </li>
           ))}
-        </ul>
+        </ul> */}
     </main>
     </div>
   );

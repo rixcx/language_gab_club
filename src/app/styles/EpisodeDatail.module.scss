@@ -1,0 +1,19 @@
+@use "global/common" as common;
+
+.hoge {
+  color: red;
+  @include common.mediaquery(sp) {
+  }
+}
+
+.paragraph { 
+  color: darkblue;
+}
+
+.heading_3 {
+  font-size: 20px;
+}
+
+.table {
+  background-color: aliceblue;
+}
