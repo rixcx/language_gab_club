@@ -15,7 +15,7 @@
     background-color: common.$color-gray;
     
     &:global(.swiper-pagination-bullet)  {
-    transition: width 0.2s ease-in-out;/*transitionの記述を追加*/
+    transition: width 0.2s ease-in-out;
     }
   }
   
@@ -30,6 +30,7 @@
 
 .episode {
   background-color: common.$color-gray;
+  
 
   &__img {
     width: 100%;
@@ -37,43 +38,55 @@
   &__inner {
     padding: 20px 15px;
   }
-    &__detail {
-      > span {
-        font-family: var(--font-anton_sc);
-        font-size: .875rem;
-      }
-      > h3 {
-        font-family: var(--font-anton_sc);
-        font-size: 1.25rem
-      }
+  &__detail {
+    > span {
+      font-family: var(--font-anton_sc);
+      font-size: .875rem;
     }
+    > h3 {
+      font-family: var(--font-anton_sc);
+      font-size: 1.25rem;
+      line-height: 1;
+    }
+  }
 
-    &__bottom {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 15px;
-      padding-top: 15px;
-      border-top: common.$color-black 1px solid;
-      > time {
-        font-size: .75rem;
-      }
-      > div {
-        > a {
-          display: block;
-          position: relative;
-          
-          &::after {
-            position: absolute;
-            content: "";
-            top: calc(50% - 10px);
-            right: 0;
-            width: 21px;
-            height: 20px;
-            background-image: url(/common/ico_listen.svg);
-            background-size: cover;
-          }
-        }
-      } 
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: common.$color-black 1px solid;
+    > time {
+      font-size: .75rem;
     }
+    > div {
+      display: block;
+      position: relative;
+      padding-right: 21px;
+      font-size: 14px;
+      font-weight: bold;
+      
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(50% - 9px);
+        right: 0;
+        width: 18px;
+        height: 17px;
+        background-image: url(/common/ico_listen.svg);
+        background-size: cover;
+      }
+    } 
+  }
+  
+  > a:hover {
+    .episode {
+      &__detail {
+      > h3 {
+        text-decoration: underline;
+      }
+      }
+    }
+  }
 }
