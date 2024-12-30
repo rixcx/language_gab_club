@@ -24,34 +24,47 @@ export default async function EpisodeDetail({ params }: { params: { id: string }
   const episodeBlocks = await fetchDetailData(id);
   
   return (
-    <div className="">
-      <main className="">
-        <h1>{episodeInfo.title.title[0].plain_text}</h1>
-        <p>{episodeInfo.date.date.start}</p>
-        <div>
-          {episodeBlocks.map((block: any) => {
-            if (block.type === 'paragraph' && block.paragraph.rich_text !== null) {
-              return <div key={block.id} className={styles.paragraph}>{block.paragraph?.rich_text?.[0]?.plain_text}</div>;
-            } else if (block.type === 'heading_3') {
-              return <div key={block.id} className={styles.heading_3}>{block.heading_3?.rich_text?.[0]?.plain_text}</div>;
-            } else if (block.type === "table" && block.has_children) {
-              return (
-                <table key={block.id} className={styles.table}>
-                  <tbody>
-                    {block.tableDetail.map((row: any, index: number) => (
-                      <tr key={index}>
-                        <th>{row.table_row.cells[0][0].plain_text}</th>
-                        <td>{row.table_row.cells[1][0].plain_text}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              );
-            }
-            return null;
-          })}
+    <>
+      <main className={styles.main}>
+        <div className={styles.info}>
+          <p>#{episodeInfo.number.number}</p>
+          <h1>{episodeInfo.title.title[0].plain_text}</h1>
+          <time>{episodeInfo.date.date.start}</time>
         </div>
-    </main>
-    </div>
+        <div className={styles.wrap}>
+          <div className={styles.movie} title="[It's a dummy]">
+            <Image
+              src={`/episodes/${episodeInfo.thumbnail.rich_text[0].plain_text}`}
+              alt={`${episodeInfo.title.title[0].plain_tex}`}
+              width={330}
+              height={186}
+            />
+          </div>
+          <div className={styles.contents}>
+            {episodeBlocks.map((block: any) => {
+              if (block.type === 'paragraph' && block.paragraph.rich_text.length !== 0) {
+                return <div key={block.id} className={styles.paragraph}>{block.paragraph?.rich_text?.[0]?.plain_text}</div>;
+              } else if (block.type === 'heading_3') {
+                return <h2 key={block.id} className={styles.heading_3}>{block.heading_3?.rich_text?.[0]?.plain_text}</h2>;
+              } else if (block.type === "table" && block.has_children) {
+                return (
+                  <table key={block.id} className={styles.table}>
+                    <tbody>
+                      {block.tableDetail.map((row: any, index: number) => (
+                        <tr key={index}>
+                          <th>{row.table_row.cells[0][0].plain_text}</th>
+                          <td>{row.table_row.cells[1][0].plain_text}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                );
+              }
+              return null;
+            })}
+          </div>
+        </div>
+      </main>
+    </>
   );
 };

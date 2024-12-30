@@ -1,19 +1,101 @@
 @use "global/common" as common;
 
-.hoge {
-  color: red;
-  @include common.mediaquery(sp) {
+.main {
+  margin-bottom: 100px;
+}
+
+.info {
+  margin-bottom: 18px;
+  padding-bottom: 15px;
+  border-bottom: common.$color-black 1px solid;
+  > p {
+    margin-bottom: 5px;
+    font-size: 1.625rem;
+    font-family: var(--font-anton_sc);
+    line-height: 1;
+  }
+  > h1 {
+    margin-bottom: 8px;
+    font-size: 3.125rem;
+    font-family: var(--font-anton_sc);
+    line-height: 1;
+  }
+  > time {
+    font-size: .875rem;
   }
 }
 
-.paragraph { 
-  color: darkblue;
+.wrap {
+  position: relative;
+  z-index: 0;
+  
+  &::after {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    top: 160px;
+    right: -50px;
+    width: 196px;
+    height: 136px;
+    background-image: url(/common/ico_doublequotation.svg);
+    background-color:rgba(255,255,255,0.75);
+    background-blend-mode:lighten;
+    background-size: cover;
+  }
 }
 
-.heading_3 {
-  font-size: 20px;
+.movie {
+  position: relative;
+  margin-bottom: 30px;
+  cursor: pointer;
+  
+  &::after {
+    position: absolute;
+    content: "";
+    top: calc(50% - 25px);
+    left: calc(50% - 25px);
+    width: 53px;
+    height: 52px;
+    background-image: url(/episodes/ico_start.svg);
+    background-size: cover;
+  }
 }
 
-.table {
-  background-color: aliceblue;
+.contents {
+  .paragraph {
+    margin-bottom: 3rem;
+  }
+
+  .heading_3 {
+    background-color: common.$color-gray;
+    padding: 35px 30px 25px 30px;
+    color: common.$color-secondary;
+    font-size: 1.625rem;
+    font-family: var(--font-anton_sc);
+    line-height: 1;
+  }
+
+  .table {
+    display: block;
+    background-color: common.$color-gray;
+    padding: 0 30px 35px 30px;
+    
+    tbody > tr {
+      display: block;
+      color: common.$color-black;
+      opacity: 0.8;
+      font-size: .875rem;
+      line-height: 1rem;
+      +tr {
+        margin-top: 20px;
+      }
+      > th, > td {
+        display: block;
+      }
+      > th {
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+    }
+  }
 }
