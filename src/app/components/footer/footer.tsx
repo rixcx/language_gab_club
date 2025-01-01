@@ -4,7 +4,6 @@ import Link from 'next/link'
 import styles from '@/src/app/styles/Footer.module.scss';
 
 export default function Footer() {
-
   return (
     <footer className={styles.footer}>
       <ul className={styles.links}>
@@ -15,7 +14,7 @@ export default function Footer() {
         <li>
           <Link href="#">
             <Image
-              src="/common/img_icon_youtube.svg"
+              src="/common/ico_youtube.svg"
               alt="Youtube"
               width={45}
               height={45}
@@ -25,7 +24,7 @@ export default function Footer() {
         <li>
           <Link href="#">
             <Image
-              src="/common/img_icon_instagram.svg"
+              src="/common/ico_instagram.svg"
               alt="Instagram"
               width={45}
               height={45}

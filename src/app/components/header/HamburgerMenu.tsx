@@ -14,7 +14,7 @@ export default function HamburgerMenu() {
   };
 
   useEffect(() => {
-    setOpen(false); //
+    setOpen(false);
   }, [pathname]);
 
   return (

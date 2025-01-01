@@ -28,6 +28,7 @@ export default async function Home() {
               alt="Just English Please!"
               width={258}
               height={258}
+              priority
             />
           </div>
           <p className={styles.hero__desc}>Our podcast is all about life at our language school—learning, overcoming challenges, and living abroad. Join us for stories, tips, and insights from our vibrant community!

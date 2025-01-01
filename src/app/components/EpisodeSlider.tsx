@@ -13,7 +13,7 @@ interface Episode {
   [x: string]: any;
 }
 interface EpisodeSliderProps {
-  episodes: Episode[]; // サーバーコンポーネントから渡されるデータの型
+  episodes: Episode[];
 }
 
 export const EpisodeSlider = ({ episodes }: EpisodeSliderProps) => {

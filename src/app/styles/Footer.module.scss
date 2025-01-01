@@ -6,9 +6,6 @@
   background-color: common.$color-black;
   color: common.$color-white;
   text-align: center;
-
-  @include common.mediaquery(sp) {
-  }
 }
 
 .links {

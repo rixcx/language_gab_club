@@ -4,11 +4,10 @@ import { Anton_SC, Roboto } from 'next/font/google'
 import Header from '@/src/app/components/header/header';
 import Footer from '@/src/app/components/footer/footer';
 
-import "./globals.css";
-
 import '@/src/app/styles/global/reset.css'
 import '@/src/app/styles/global/global.scss'
-import css from '@/src/app/styles/Layout.module.scss';
+
+import styles from '@/src/app/styles/Layout.module.scss';
 
 import 'swiper/swiper-bundle.css';
 
@@ -42,9 +41,9 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
-        className={`${anton_sc.variable} ${roboto.variable} antialiased ${css.body}`}
+        className={`${anton_sc.variable} ${roboto.variable} antialiased ${styles.body}`}
       >
-        <div className={css.inner}>
+        <div className={styles.inner}>
           <Header />
             {children}
           <Footer />
