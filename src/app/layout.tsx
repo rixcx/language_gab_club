@@ -26,6 +26,16 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   title: "Just English Please!",
   description: "The podcast of our language school!",
+  robots: {
+      index: false,
+      follow: false,
+      nosnippet: true,
+      noimageindex: true,
+      
+    googleBot: {
+      index: false,
+    },
+  },
 };
 
 export default function RootLayout({
