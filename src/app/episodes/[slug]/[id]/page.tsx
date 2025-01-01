@@ -32,7 +32,7 @@ export default async function EpisodeDetail({ params }: { params: { id: string }
           <time>{episodeInfo.date.date.start}</time>
         </div>
         <div className={styles.wrap}>
-          <div className={styles.movie} title="[It's a dummy]">
+          <div className={styles.movie} title="[dummy]">
             <Image
               src={`/episodes/${episodeInfo.thumbnail.rich_text[0].plain_text}`}
               alt={`${episodeInfo.title.title[0].plain_tex}`}

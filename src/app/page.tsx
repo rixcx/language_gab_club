@@ -30,7 +30,7 @@ export default async function Home() {
               height={258}
             />
           </div>
-          <p className={styles.hero__disc}>Our podcast is all about life at our language school—learning, overcoming challenges, and living abroad. Join us for stories, tips, and insights from our vibrant community!
+          <p className={styles.hero__desc}>Our podcast is all about life at our language school—learning, overcoming challenges, and living abroad. Join us for stories, tips, and insights from our vibrant community!
           </p>
         </section>
         

@@ -1,0 +1,80 @@
+@use "global/common" as common;
+
+.main {
+  margin-bottom: 100px;
+  @include common.mediaquery(sp) {
+  }
+}
+
+.subtitle {
+  margin-bottom: 40px;
+  font-family: var(--font-anton_sc);
+  font-size: 2.625rem;
+  color: common.$color-secondary;
+}
+
+.episode {
+  background-color: common.$color-gray;
+
+  +.episode {
+    margin-top: 60px;
+  }
+
+  &__img {
+    width: 100%;
+    background:common.$color-secondary;
+  }
+  &__inner {
+    padding: 30px 15px;
+  }
+  &__detail {
+    > span {
+      font-family: var(--font-anton_sc);
+      font-size: 1.125rem;
+    }
+    > h3 {
+      font-family: var(--font-anton_sc);
+      font-size: 1.625rem;
+      line-height: 1;
+    }
+  }
+
+  &__bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: common.$color-black 1px solid;
+    > time {
+      font-size: .875rem;
+    }
+    > div {
+      display: block;
+      position: relative;
+      padding-right: 23px;
+      font-weight: bold;
+      
+      &::after {
+        position: absolute;
+        content: "";
+        top: calc(50% - 10px);
+        right: 0;
+        width: 21px;
+        height: 20px;
+        background-image: url(/common/ico_listen.svg);
+        background-size: cover;
+      }
+    } 
+  }
+  
+  > a:hover {
+    .episode {
+      &__detail {
+      > h3 {
+        text-decoration: underline;
+      }
+      }
+    }
+  }
+}

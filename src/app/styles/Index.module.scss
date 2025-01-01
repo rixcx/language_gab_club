@@ -47,7 +47,7 @@
     }
   }
 
-  &__disc {
+  &__desc {
     position: relative;
     z-index: 2;
     padding: 0 30px;
@@ -62,6 +62,7 @@
   font-family: var(--font-anton_sc);
   font-size: 2.625rem;
   color: common.$color-secondary;
+  line-height: 1;
 }
 
 .latest_episode {

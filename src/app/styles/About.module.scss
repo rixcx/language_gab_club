@@ -1,0 +1,49 @@
+@use "global/common" as common;
+
+.main {
+  margin-bottom: 100px;
+  @include common.mediaquery(sp) {
+  }
+}
+
+.subtitle {
+  margin-bottom: 40px;
+  font-family: var(--font-anton_sc);
+  font-size: 2.625rem;
+  color: common.$color-secondary;
+  line-height: 1;
+}
+
+.desc {
+  margin-bottom: 100px;
+  
+  &__txt {
+    margin-bottom: 60px;
+    font-size: 1.125rem;
+  }
+  
+  &__img {
+  padding: 0 15px;
+  position: relative;
+  
+    &::after {
+      position: absolute;
+      content: "";
+      top: -20px;
+      left: 0;
+      width: 74px;
+      height: 52px;
+      background-image: url(/common/ico_doublequotation.svg);
+      background-size: cover;
+    }
+  }
+}
+
+.howto {
+  .subtitle { 
+    color: common.$color-primary;
+  }
+  &__txt a {
+    text-decoration: underline;
+  }
+}
