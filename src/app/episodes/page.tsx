@@ -1,4 +1,4 @@
-import { getAllEpisodes } from "@/src/app/api/notion/route"
+import { getAllEpisodes } from "@/src/lib/notion"
 
 import Image from "next/image";
 import Link from "next/link";
