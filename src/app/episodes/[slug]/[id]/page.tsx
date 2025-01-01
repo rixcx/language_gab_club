@@ -17,9 +17,17 @@ async function fetchDetailData(id: string) {
   return result;
 };
 
-export default async function EpisodeDetail({ params }: { params: { id: string } }) {
+type EpisodeDetailProps = {
+  params : Promise<{
+    slug: string,
+    id: string
+  }>;
+};
 
-  const { id } = await params;
+export default async function EpisodeDetail({ params }: EpisodeDetailProps) {
+
+  const thisPageParams  = await params;
+  const id  = await thisPageParams.id;
   const episodeInfo = await fetchInfoData(id)
   const episodeBlocks = await fetchDetailData(id);
   
