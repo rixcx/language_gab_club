@@ -35,12 +35,12 @@ export default function Footer() {
       <div className={styles.logo}>
         <Image
           src="/common/logo_title_wht.svg"
-          alt="Jast Engilish Please!"
-          width={103}
-          height={103}
+          alt="Language Gab Club"
+          width={120}
+          height={71}
       />
       </div>
-      <small className={styles.copyright}>&copy; Copyright 2024 JEP All rights reserved.</small>
+      <small className={styles.copyright}>&copy; Copyright 2024 LGC All rights reserved.</small>
     </footer>
   );
 }

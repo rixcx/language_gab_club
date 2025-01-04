@@ -22,10 +22,10 @@ export default async function Home() {
       <main className={styles.main}>
         <section className={styles.hero}>
           <div className={styles.hero__logo}>
-            <h1>Just English Please!</h1>
+            <h1>Language Gab Club</h1>
             <Image
               src="/common/logo_title_blk.svg"
-              alt="Just English Please!"
+              alt="Language Gab Club"
               width={258}
               height={258}
               priority

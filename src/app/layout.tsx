@@ -24,7 +24,7 @@ const roboto = Roboto({
 })
 
 export const metadata: Metadata = {
-  title: "Just English Please!",
+  title: "Language Gab Club",
   description: "The podcast of our language school!",
   robots: {
       index: false,
@@ -46,7 +46,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Just English Please!</title>
+        <title>Language Gab Club</title>
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>

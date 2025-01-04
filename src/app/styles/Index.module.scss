@@ -35,15 +35,17 @@
     display: inline-block;
     position: relative;
     z-index: 2;
-    transform: rotate(-2.5deg);
+    transform: rotate(-1.5deg);
     margin-bottom: 60px;
-    padding: 10px 20px;
+    padding: 35px 15px 45px 15px;
     text-align: center;
     border: common.$color-black 5px solid;
+    border-radius: 5px;
     background-color: #fff;
 
     > h1 {
       visibility: hidden;
+      display: none;
     }
   }
 

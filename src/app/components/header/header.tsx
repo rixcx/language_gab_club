@@ -15,7 +15,7 @@ export default function Header() {
           <Link href="/">
             <Image
               src="/common/logo_icon.svg"
-              alt="Just English Please"
+              alt="Language Gab Club"
               width={50}
               height={55}
             />
