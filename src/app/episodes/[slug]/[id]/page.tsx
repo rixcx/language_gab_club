@@ -17,6 +17,18 @@ async function fetchDetailData(id: string) {
   return result;
 };
 
+// TODO: 詳細ページの表示が遅いのでSSGかISRか考える
+// export async function generateStaticParams() {
+//   const response = await getAllEpisodes();
+//   const result = await response.json();
+
+//   return result.map((episode: { properties: any; slug: any; id: any; }) => ({
+//     slug: episode.properties.slug.rich_text[0].plain_text,
+//     id: episode.id,
+//   }));
+// }
+
+
 type EpisodeDetailProps = {
   params : Promise<{
     slug: string,
@@ -76,3 +88,4 @@ export default async function EpisodeDetail({ params }: EpisodeDetailProps) {
     </>
   );
 };
+
