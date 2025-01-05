@@ -14,7 +14,7 @@ export default function Footer() {
         <li>
           <Link href="#">
             <Image
-              src="/common/ico_youtube.svg"
+              src="/common/ico_youtube.png"
               alt="Youtube"
               width={45}
               height={45}
@@ -24,7 +24,7 @@ export default function Footer() {
         <li>
           <Link href="#">
             <Image
-              src="/common/ico_instagram.svg"
+              src="/common/ico_instagram.png"
               alt="Instagram"
               width={45}
               height={45}
