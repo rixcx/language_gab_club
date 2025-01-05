@@ -1,12 +1,100 @@
 @use "global/common" as common;
 
-.body {
-  max-width: 390px;
-  margin: 0 auto;
+.background {
+  position: relative;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+
+  &::before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 0;
+    top: 18%;
+    left: calc(50% - 70%);
+    width: 140%;
+    height: 70%;
+  }
+  &::before {
+    rotate: 5deg;
+    background-color: rgba(255, 173, 86, 0.45)
+  }
+}
+
+.nav {
+  position: absolute;
+  top: 26%;
+  left: 15%;
+  font-size: 2.325rem;
+  
+  @include common.mediaquery(laptop) {
+    left: 21.5%;
+    font-size: 2.5rem;
+  }
+  @include common.mediaquery(sp) {
+    display: none;
+  }
+
+  .links {
+    margin-bottom: 30px;
+    font-family: var(--font-anton_sc);
+    color: common.$color-white;
+    
+    > li + li {
+      margin-top: 30px;
+    }
+  }
+
+  .sns {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+  }
+}
+
+.footer {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  
+  @include common.mediaquery(sp) {
+    display: none;
+  }
+  
+  .logo {
+    width: 100px;
+    height: auto;
+  }
+}
+
+.main {
+  position: absolute;
+  width: 390px;
+  max-height: 100vh;
+  right: 14%;
   font-family: var(--font-roboto);
   color: common.$color-black;
   background-color: common.$color-white;
   box-shadow: 0px 0px 55px -5px #bb5c1e;
+  overflow-y: scroll; 
+  
+  &::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+  
+  @include common.mediaquery(sp) {
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+  }
+  
+  @include common.mediaquery(xsp) {
+    width: 100%;
+  }
 }
 
 .inner {

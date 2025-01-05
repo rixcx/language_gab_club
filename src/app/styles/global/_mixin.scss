@@ -1,8 +1,10 @@
 @use "sass:map";
 
 $breakpoint: (
+  xsp: "screen and (max-width: 430px)",
   sp: "screen and (max-width: 767px)",
   pc: "screen and (min-width: 768px)",
+  laptop: "screen and (min-width: 1024px)",
 );
 
 @mixin mediaquery($device) {
